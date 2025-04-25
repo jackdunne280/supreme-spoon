@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoobSol.fun - Beginner Solutions Made Fun!</title>
+    <style>
+        :root {
+            --primary: #7b34dd;
+            --secondary: #2cd3b7;
+            --background: #121212;
+            --text: #ffffff;
+            --accent: #ff6b6b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            background: url('/api/placeholder/1200/600') center/cover;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(123, 52, 221, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            margin-left: 15px;
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 10px 20px rgba(44, 211, 183, 0.4);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 30px;
+            transition: transform 0.3s;
+            cursor: pointer;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .solutions {
+            background-color: rgba(123, 52, 221, 0.05);
+        }
+        
+        .solution-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px 10px;
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .tab-btn.active {
+            color: var(--secondary);
+        }
+        
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .tab-btn.active::after {
+            width: 80%;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .solution-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .solution-content {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .solution-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .solution-title h3 {
+            color: var(--secondary);
+        }
+        
+        .difficulty {
+            background-color: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .difficulty.easy {
+            background-color: #4CAF50;
+        }
+        
+        .difficulty.medium {
+            background-color: #FF9800;
+        }
+        
+        .difficulty.hard {
+            background-color: #F44336;
+        }
+        
+        .solution-code {
+            background-color: #1e1e1e;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .cta {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(123, 52, 221, 0.1), rgba(44, 211, 183, 0.1));
+            border-radius: 10px;
+            padding: 60px 20px;
+            margin-top: 40px;
+        }
+        
+        .cta h2 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .newsletter {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .newsletter input {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+        
+        .newsletter input::placeholder {
+            color: #a0a0a0;
+        }
+        
+        footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: #a0a0a0;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            color: #707070;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero {
+                height: 60vh;
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+            }
+            
+            .newsletter {
+                flex-direction: column;
+            }
+        }
+
+        #noobCode {
+            height: 300px;
+            resize: none;
+            width: 100%;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            margin-bottom: 15px;
+        }
+
+        #improvedCode {
+            height: 300px;
+            background-color: #1e1e1e;
+            color: #4CAF50;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            margin-bottom: 15px;
+            overflow: auto;
+        }
+
+        .code-converter {
+            margin-top: 40px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        .code-converter h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .countdown h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .countdown-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 80px;
+        }
+
+        .countdown-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">Noob<span>Sol</span>.fun</a>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#solutions">Solutions</a></li>
+                    <li><a href="#playground">Code Playground</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Beginner Solutions Made Fun!</h1>
+            <p>NoobSol.fun is your gateway to simplified coding solutions, gaming guides, and tech tutorials that actually make sense. No jargon, no complexity - just simple solutions that work!</p>
+            <div>
+                <a href="#features" class="btn">Explore Features</a>
+                <a href="#playground" class="btn btn-secondary">Try Code Playground</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose NoobSol?</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3>Simple Solutions</h3>
+                    <p>We break down complex problems into easy-to-understand solutions with step-by-step explanations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Gaming Guides</h3>
+                    <p>Level up your gaming skills with our noob-friendly guides, tips, and tricks for popular games.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Code Cleanups</h3>
+                    <p>Convert your beginner code to professional-level with our instant code optimizer.</p>
+                </div>
+            </div>
+
+            <div class="countdown">
+                <h3>Next Live Coding Session</h3>
+                <div class="countdown-timer">
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solutions" class="solutions">
+        <div class="container">
+            <h2 class="section-title">Popular Solutions</h2>
+            <div class="solution-tabs">
+                <button class="tab-btn active" data-tab="coding">Coding</button>
+                <button class="tab-btn" data-tab="gaming">Gaming</button>
+                <button class="tab-btn" data-tab="tech">Tech</button>
+            </div>
+
+            <div class="tab-content active" id="coding-content">
+                <div class="solution-card">
+                    <div class="solution-title">
+                        <h3>How to Fix Array Out of Bounds Error</h3>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="solution-content">
+                        <p>Array out of bounds errors are common for beginners. Here's a quick fix:</p>
+                        <div class="solution-code">
+                            // Before: Error-prone code
+                            for (int i = 0; i <= myArray.length; i++) {
+                                System.out.println(myArray[i]);
+                            }
+                            
+                            // After: Fixed code
+                            for (int i = 0; i < myArray.length; i++) {
+                                System.out.println(myArray[i]);
+                            }
+                        </div>
+                        <p>Notice the change from <= to < in the loop condition? This prevents accessing an index that doesn't exist!</p>
+                    </div>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-title">
+                        <h3>Understanding Recursion Simply</h3>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="solution-content">
+                        <p>Recursion explained simply: a function that calls itself until it reaches a stopping condition.</p>
+                        <div class="solution-code">
+                            // Simple factorial function using recursion
+                            function factorial(n) {
+                                // Base case (stopping condition)
+                                if (n <= 1) {
+                                    return 1;
+                                }
+                                
+                                // Recursive case
+                                return n * factorial(n - 1);
+                            }
+                            
+                            // factorial(5) = 5 * 4 * 3 * 2 * 1 = 120
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="gaming-content">
+                <div class="solution-card">
+                    <div class="solution-title">
+                        <h3>Minecraft: First Night Survival Guide</h3>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="solution-content">
+                        <p>Surviving your first night in Minecraft is crucial. Follow these steps:</p>
+                        <ol>
+                            <li>Punch trees to collect wood (at least 12 blocks)</li>
+                            <li>Craft a crafting table and wooden tools</li>
+                            <li>Find coal or make charcoal</li>
+                            <li>Build a small shelter before sunset</li>
+                            <li>Craft torches and place them inside your shelter</li>
+                            <li>Create a bed if you have wool from sheep</li>
+                        </ol>
+                        <p>Remember: monsters spawn in darkness, so keep your shelter well-lit!</p>
+                    </div>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-title">
+                        <h3>Fortnite: Building Basics for Beginners</h3>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="solution-content">
+                        <p>Master these basic building techniques to improve your survival chances:</p>
+                        <ul>
+                            <li><strong>1x1 Box:</strong> Four walls, a floor, and a ceiling for quick protection</li>
+                            <li><strong>Ramp Rush:</strong> Place a wall followed by a ramp to gain height advantage</li>
+                            <li><strong>Editing:</strong> Practice editing walls to create windows or doors</li>
+                        </ul>
+                        <p>Pro tip: Assign building pieces to easily accessible keys/buttons for faster building.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tech-content">
+                <div class="solution-card">
+                    <div class="solution-title">
+                        <h3>Speed Up Your Slow Computer</h3>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="solution-content">
+                        <p>Try these simple fixes to speed up your computer:</p>
+                        <ol>
+                            <li>Uninstall unused programs</li>
+                            <li>Clear temporary files and browser cache</li>
+                            <li>Disable startup programs you don't need</li>
+                            <li>Run a disk cleanup and defragmentation</li>
+                            <li>Consider adding more RAM if possible</li>
+                        </ol>
+                        <p>These basic steps can significantly improve performance without technical knowledge!</p>
+                    </div>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-title">
+                        <h3>Setting Up a Home Wi-Fi Network Properly</h3>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="solution-content">
+                        <p>Follow these tips for better home Wi-Fi:</p>
+                        <ul>
+                            <li>Place your router in a central location, away from walls</li>
+                            <li>Use the 5GHz band for faster speeds when close to the router</li>
+                            <li>Choose a less crowded Wi-Fi channel (use an analyzer app)</li>
+                            <li>Set a strong password using WPA3 encryption if available</li>
+                            <li>Consider mesh Wi-Fi systems for larger homes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="playground">
+        <div class="container">
+            <h2 class="section-title">Code Playground</h2>
+            <p style="text-align: center; margin-bottom: 40px;">Paste your messy code below and we'll clean it up for you!</p>
+            
+            <div class="code-converter">
+                <h3>Your Code (Before)</h3>
+                <textarea id="noobCode" placeholder="Paste your messy code here..."></textarea>
+                
+                <button id="convertCode" class="btn" style="margin-bottom: 20px;">Make It Better!</button>
+                
+                <h3>Improved Code (After)</h3>
+                <div id="improvedCode">Your improved code will appear here...</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="cta">
+                <h2>Stay Updated with NoobSol</h2>
+                <p>Subscribe to our newsletter for weekly tips, guides, and solutions.</p>
+                <form class="newsletter">
+                    <input type="email" placeholder="Your email address">
+                    <button class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="social-links">
+                <a href="#" aria-label="Twitter">Twitter</a>
+                <a href="#" aria-label="Discord">Discord</a>
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="YouTube">YouTube</a>
+            </div>
+            <p class="copyright">© 2025 NoobSol.fun - All rights reserved</p>
+        </div>
+    </footer>
+
+    <div class="dark-mode-toggle" id="darkModeToggle">
+        🌙
+    </div>
+
+    <script>
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(`${tabId}-content`).classList.add('active');
+            });
+        });
+        
+        // Code converter
+        const convertBtn = document.getElementById('convertCode');
+        const noobCode = document.getElementById('noobCode');
+        const improvedCode = document.getElementById('improvedCode');
+        
+        convertBtn.addEventListener('click', () => {
+            const code = noobCode.value;
+            if (!code.trim()) {
+                improvedCode.textContent = 'Please enter some code first!';
+                return;
+            }
+            
+            // Simple code improvement function
+            let improved = code
+                // Fix spacing
+                .replace(/\s*\(\s*/g, ' (')
+                .replace(/\s*\)\s*/g, ') ')
+                .replace(/\s*\{\s*/g, ' {\n    ')
+                .replace(/\s*\}\s*/g, '\n}\n')
+                .replace(/;\s*/g, ';\n    ')
+                .replace(/\n\s*\n/g, '\n')
+                // Add missing semicolons
+                .replace(/([^;{}])\n/g, '$1;\n')
+                // Fix indentation
+                .replace(/\n\s+\n/g, '\n\n');
+            
+            // Add comments
+            if (improved.includes('for (') || improved.includes('while (')) {
+                improved = '// Loop with proper indentation\n' + improved;
+            }
+            
+            if (improved.includes('function ')) {
+                improved = improved.replace(/function\s+([a-zA-Z0-9_]+)\s*\(([^)]*)\)/g, 
+                                          '/**\n * $1 function\n * @param {$2} Parameters\n * @returns Result\n */\nfunction $1($2)');
+            }
+            
+            // Add a fancy success message
+            improvedCode.innerHTML = improved + '\n\n// Code optimized successfully! ✨';
+            
+            // Animate the improved code display
+            improvedCode.style.opacity = '0';
+            setTimeout(() => {
+                improvedCode.style.opacity = '1';
+            }, 200);
+        });
+        
+        // Countdown timer
+        const countdownDate = new Date();
+        countdownDate.setDate(countdownDate.getDate() + 3); // 3 days from now
+        countdownDate.setHours(15, 0, 0, 0); // 3:00 PM
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Animation on scroll for
